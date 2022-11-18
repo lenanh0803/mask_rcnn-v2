@@ -68,7 +68,7 @@ class MaskModel():
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         for i in range(len(masks)):
-            rgb_mask = get_coloured_mask(masks[i])
+            rgb_mask = self.get_coloured_mask(masks[i])
             img = cv2.addWeighted(img, 1, rgb_mask, 0.5, 0)
         plt.figure(figsize=(20,30))
         plt.imshow(img)
