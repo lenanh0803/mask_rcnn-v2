@@ -49,7 +49,7 @@ class MaskModel():
         img = Image.open(img_path)
         transform = T.Compose([T.ToTensor()])
         img = transform(img)
-        pred = model([img])
+        pred = self.model([img])
         pred_score = list(pred[0]['scores'].detach().numpy())
         pred_t = [pred_score.index(x) for x in pred_score if x>confidence][-1]
         masks = (pred[0]['masks']>0.5).squeeze().detach().cpu().numpy()
@@ -64,7 +64,7 @@ class MaskModel():
 
     def segment_instance(self, img_path, confidence=0.5, rect_th=2, text_size=2, text_th=2):
 
-        masks, boxes, pred_cls = get_prediction(img_path, confidence)
+        masks, boxes, pred_cls = self.get_prediction(img_path, confidence)
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         for i in range(len(masks)):
